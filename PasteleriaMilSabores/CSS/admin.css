@@ -1,0 +1,630 @@
+/* Una nota importante que agregar es que este segmento de estilo lo definí de forma global para el home de administardor, nuevo-usuario y listado de usuarios
+===================================
+            TOKENS (ADMIN)
+   =================================== */
+:root{
+  /* Tokens de paleta de colores */
+  --adm-bg: #FFF5E1;      
+  --adm-rosa: #FFC0CB;   
+  --adm-choco: #8B4513;   
+  --adm-text: #5D4037;    
+  --adm-text-sec: #B0BEC5; 
+  --adm-surface: #ffffff;  
+  --adm-border: #eadbc4;  
+
+  /* Estos son para las tipografías  */
+  --adm-ff-base: "Lato", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --adm-ff-title: "Pacifico", cursive;
+
+  /* Estos son para las dimensiones */
+  --adm-radius: 12px;
+  --adm-gap: 16px;
+  --adm-gap-lg: 24px;
+
+  /* Este es para lasombra */
+  --adm-shadow: 0 4px 14px rgba(0,0,0,.06);
+
+  /* Este define el ancho del sidebar */
+  --adm-sidebar-w: 260px;
+}
+
+.sr-only{
+  position:absolute !important; width:1px !important; height:1px !important;
+  padding:0 !important; margin:-1px !important; overflow:hidden !important;
+  clip:rect(0,0,0,0) !important; white-space:nowrap !important; border:0 !important;
+}
+
+.salto-contenido{
+  position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
+}
+.salto-contenido:focus{
+  position:fixed; left:16px; top:16px; width:auto; height:auto; padding:10px 14px;
+  background: var(--adm-rosa); color: var(--adm-text); border-radius: 8px;
+  box-shadow: var(--adm-shadow); z-index: 10000;
+}
+
+/* ===========================
+   PÁGINA
+   =========================== */
+html, body{
+  margin:0; padding:0;
+  background: var(--adm-bg);
+  color: var(--adm-text);
+  font-family: var(--adm-ff-base);
+  line-height: 1.55;
+}
+
+/* ===========================
+   HEADER
+   =========================== */
+.admin-header{
+  background: var(--adm-surface);
+  border-bottom: 1px solid var(--adm-border);
+  position: sticky; top: 0; z-index: 1000;
+}
+.admin-header__wrap{
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: var(--adm-gap);
+  align-items: center;
+  padding: 12px min(4vw, 24px);
+}
+
+/* Marca */
+.marca__link{
+  display: inline-flex; align-items: center; gap: 10px;
+  text-decoration: none; color: inherit;
+}
+.marca__logo{ width: 40px; height: 40px; object-fit: contain; }
+.marca__nombre{
+  font-family: var(--adm-ff-title);
+  font-size: clamp(20px, 2.4vw, 28px);
+  color: var(--adm-choco);
+}
+
+/* Buscador */
+.buscador-global{
+  display: none;
+}
+.buscador-global input{
+  padding: 10px 12px; border:1px solid var(--adm-border); border-radius: 10px;
+  background:#fff; color: var(--adm-text); outline: none;
+}
+.buscador-global button{
+  margin-left: 8px; padding: 10px 14px; border:0; border-radius: 999px; cursor:pointer;
+  background: var(--adm-rosa); color: var(--adm-text);
+}
+
+.header-acciones ul{
+  list-style: none; display: flex; gap: 12px; padding: 0; margin: 0;
+}
+.header-acciones a{
+  text-decoration: none; color: var(--adm-text);
+  padding: 6px 10px; border-radius: 8px;
+}
+.header-acciones a:hover{ background: color-mix(in srgb, var(--adm-rosa) 40%, #fff); }
+
+.btn-toggle-sidebar{
+  justify-self: end;
+  appearance: none; border:0; cursor:pointer;
+  padding: 10px 12px; border-radius: 8px;
+  margin: 15px ;
+  background: var(--adm-rosa); color: var(--adm-text); font-weight: 700;
+}
+
+/* ===========================
+   SIDEBAR (normal + colapsado)
+   =========================== */
+.menu-lateral {
+  width: var(--adm-sidebar-w); /* 260px por defecto */
+  transition: width 0.3s ease;
+  overflow: hidden;
+  background: var(--adm-surface);
+  border-right: 1px solid var(--adm-border);
+  padding: 16px;
+  min-height: calc(100dvh - 70px); /* Asegura ocupar toda la altura */
+}
+
+/* Estado colapsado (solo íconos) */
+.menu-lateral.colapsado {
+  width: 60px;
+  padding: 16px 8px; /* menos padding en colapsado */
+}
+
+/* Ocultar títulos en colapsado */
+.menu-lateral.colapsado .menu-lateral__titulo,
+.menu-lateral.colapsado .titulo {
+  display: none;
+}
+
+/* Enlaces del menú */
+.menu-lateral__lista {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+  display: grid;
+  gap: 6px;
+}
+
+.menu-lateral__lista a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  text-decoration: none;
+  color: var(--adm-text);
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.menu-lateral__lista a[aria-current="page"],
+.menu-lateral__lista a:hover {
+  background: color-mix(in srgb, var(--adm-rosa) 40%, #fff);
+}
+
+/* En colapsado, centramos solo el ícono */
+.menu-lateral.colapsado .menu-lateral__lista a {
+  justify-content: center;
+  gap: 0;
+}
+
+/* ===========================
+   AJUSTE DEL LAYOUT
+   =========================== */
+/* Normal (sidebar ancho) */
+.admin-layout {
+  display: grid;
+  grid-template-columns: var(--adm-sidebar-w) 1fr;
+  gap: 0;
+}
+
+/* Colapsado */
+body.menu-colapsado .admin-layout {
+  grid-template-columns: 60px 1fr;
+}
+
+/* ===========================
+   MAIN - BLOQUES GENERALES
+   =========================== */
+
+.bloque{ 
+  margin-bottom: 28px; }
+.bloque__header{ margin-bottom: 8px; }
+.bloque__descripcion{ color: var(--adm-text-sec); margin: 4px 0 0; }
+
+h1, h2, h3{
+  color: var(--adm-choco);
+  font-family: var(--adm-ff-title);
+  margin: 0 0 6px;
+}
+
+.acciones-rapidas__lista{
+  list-style: none; display: grid; gap: 10px; padding: 0; margin: 12px 0 0;
+  grid-template-columns: 1fr 1fr; 
+}
+.accion{
+  display: block; text-decoration: none; text-align: center;
+  padding: 12px; border-radius: 10px; background: var(--adm-rosa); color: var(--adm-text);
+}
+
+.tarjetas{
+  display: grid; gap: 16px;
+  grid-template-columns: 1fr; 
+}
+.tarjeta{
+  background: var(--adm-surface); border:1px solid var(--adm-border);
+  border-radius: var(--adm-radius); box-shadow: var(--adm-shadow);
+  padding: 16px;
+}
+.tarjeta__titulo{ font-size: 1.05rem; }
+.tarjeta__dato{ font-size: 1.8rem; margin: 6px 0; font-weight: 700; }
+.tarjeta__nota{ color: var(--adm-text-sec); margin: 0 0 8px; }
+.tarjeta__footer a{ color: var(--adm-choco); text-decoration: none; font-weight: 700; }
+.tarjeta__footer a:hover{ text-decoration: underline; }
+
+.tabla-envuelta{ overflow:auto; border: 1px solid var(--adm-border); border-radius: 10px; background:#fff; }
+.tabla{ width: 100%; border-collapse: collapse; min-width: 640px; }
+.tabla th, .tabla td{ padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--adm-border); }
+.tabla thead th{ background: color-mix(in srgb, var(--adm-rosa) 30%, #fff); font-weight: 700; }
+
+/* ===========================
+   FOOTER
+   =========================== */
+.admin-footer{
+  border-top: 1px solid var(--adm-border);
+  background: var(--adm-surface); color: var(--adm-text);
+}
+.admin-footer__wrap{
+  display: grid; gap: 12px; padding: 16px min(4vw, 24px);
+}
+.admin-footer a{ color: var(--adm-choco); text-decoration: none; }
+.admin-footer a:hover{ text-decoration: underline; }
+
+/* ===========================
+   FOCUS ACCESIBLE (teclado)
+   =========================== */
+:where(a, button, input, select, textarea):focus-visible{
+  outline: 3px solid color-mix(in srgb, var(--adm-choco) 30%, transparent);
+  outline-offset: 2px;
+}
+
+/* ===========================
+   RESPONSIVE (>= 768px y >= 992px)
+   =========================== */
+@media (min-width: 768px){
+  .tarjetas{ grid-template-columns: repeat(2, 1fr); }
+  .acciones-rapidas__lista{ grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 992px){
+  .buscador-global{ display: flex; align-items: center; }
+  .admin-layout{
+    grid-template-columns: var(--adm-sidebar-w) 1fr; 
+  }
+  .menu-lateral{ display: block; min-height: calc(100dvh - 70px); } 
+  .admin-contenido{ padding: 24px 24px 48px; }
+  .tarjetas{ grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ===========================
+   ESTADO "MENÚ ABIERTO" EN MÓVIL (JS)
+   =========================== */
+/* Cuando implementemos JS, al abrir el menú hay que añadir p.ej. .menu-open al body */
+@media (max-width: 991px){
+  body.menu-open .menu-lateral{
+    display: block;
+    position: fixed; inset: 0 auto 0 0; width: min(85vw, 320px);
+    z-index: 1100; box-shadow: 6px 0 20px rgba(0,0,0,.15);
+  }
+  body.menu-open .admin-contenido{
+    filter: blur(.5px);
+  }
+}
+
+
+
+/* ===========================
+   NUEVO USUARIO — FORM CARD
+   Esto permite que el formulario de nuevo usuario tenga el aspecto de una tarjeta, en lugar de estar los campos apilados uno sobre otro
+   =========================== */
+
+/* Contenedor del panel de formulario (marco + fondo dentro de admin-contenido) */
+.form-card{
+  background: var(--adm-surface);
+  border: 1px solid var(--adm-border);
+  border-radius: var(--adm-radius);
+  box-shadow: var(--adm-shadow);
+  padding: 18px;
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.form-card__title{
+  background: color-mix(in srgb, #c7c7c7 70%, #fff);
+  color: var(--adm-text);
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+}
+
+.texto-ayuda{
+  color: var(--adm-text-sec);
+  font-size: .92rem;
+}
+
+.form-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--adm-gap);
+}
+
+.campo{
+  display: grid;
+  gap: 6px;
+}
+
+.campo-doble{
+  display: grid;
+  gap: var(--adm-gap);
+}
+.campo-doble .input-group{
+  display: grid;
+  gap: 6px;
+}
+
+:where(.form-grid) :where(input[type="text"],
+                         input[type="email"],
+                         input[type="password"],
+                         input[type="tel"],
+                         input[type="date"],
+                         input[type="number"],
+                         input[type="search"],
+                         select,
+                         textarea){
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--adm-border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--adm-text);
+  line-height: 1.4;
+}
+:where(.form-grid) textarea{ min-height: 96px; resize: vertical; }
+
+:where(.form-grid) :where(input,select,textarea):focus-visible{
+  outline: 3px solid color-mix(in srgb, var(--adm-choco) 30%, transparent);
+  outline-offset: 2px;
+}
+
+.form-acciones{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+.btn{
+  appearance: none; border: 1px solid var(--adm-border);
+  background: #fff; color: var(--adm-text);
+  padding: 10px 16px; border-radius: 10px; cursor: pointer;
+}
+.btn-primario{
+  border: 0;
+  background: var(--adm-choco); 
+  color: #fff; font-weight: 700;
+}
+.btn:hover{ filter: brightness(0.98); }
+.btn-primario:hover{ filter: brightness(0.95); }
+
+/* Título principal (h1) coherente con el sistema */
+.admin-nuevo-usuario #titulo-pagina{
+  font-family: var(--adm-ff-title);
+  color: var(--adm-choco);
+  font-size: clamp(22px, 3vw, 28px);
+  margin: 0;
+}
+
+/* ===========================
+          R ESPONSIVE
+   =========================== */
+@media (min-width: 640px){
+  .form-card{ padding: 22px; }
+  .campo-doble{ grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 992px){
+  /* Asegura espacio visual alrededor, similar al mock */
+  .admin-nuevo-usuario .admin-contenido{
+    padding-top: 24px;
+    padding-bottom: 32px;
+  }
+}
+/* Menú lateral */
+.menu-lateral {
+  width: 150px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  background: #f8f8f8;
+}
+
+/* Estado colapsado (solo íconos) */
+.menu-lateral.colapsado {
+  width: 60px;
+}
+
+/* Ocultar texto en colapsado */
+.menu-lateral.colapsado .menu-lateral__lista a {
+  display: flex;
+  justify-content: center;
+}
+
+.menu-lateral.colapsado .menu-lateral__lista a::after {
+  content: attr(data-titulo);
+  display: none;
+}
+
+/* Normal (ícono + texto) */
+.menu-lateral__lista a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.menu-lateral__titulo {
+  margin-left: 10px;
+  font-weight: bold;
+}
+/* Ocultar los títulos cuando está colapsado */
+.menu-lateral.colapsado .titulo {
+  display: none;
+}
+
+.menu-lateral.colapsado .menu-lateral__lista a {
+  justify-content: center;
+}
+.menu-lateral.colapsado .menu-lateral__lista a::after {
+  content: attr(data-titulo);
+  display: none;
+}
+
+/* ===========================
+   MAIN - HOME ADMIN
+   =========================== */
+
+/* Bloques generales */
+.resumen-dia {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+
+.resumen-dia__item {
+  background: var(--adm-surface);
+  border: 1px solid var(--adm-border);
+  border-radius: var(--adm-radius);
+  box-shadow: var(--adm-shadow);
+  padding: 16px;
+  text-align: center;
+}
+
+.resumen-dia__item h3 {
+  font-size: 1rem;
+  color: var(--adm-choco);
+  margin: 0 0 6px;
+}
+
+.resumen-dia__item p {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--adm-text);
+  margin: 0;
+}
+
+/* Placeholder de gráficos */
+.grafico-placeholder {
+  border: 2px dashed var(--adm-border);
+  border-radius: var(--adm-radius);
+  padding: 40px;
+  text-align: center;
+  font-style: italic;
+  color: var(--adm-text-sec);
+  background: #fff;
+}
+
+/* Actividad reciente */
+.actividad-lista {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 10px 0 0;
+  color: var(--adm-text);
+}
+
+.actividad-lista li {
+  margin-bottom: 6px;
+}
+
+/* Tabla de productos críticos */
+.tabla-stock {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--adm-surface);
+  border: 1px solid var(--adm-border);
+  border-radius: var(--adm-radius);
+  overflow: hidden;
+  box-shadow: var(--adm-shadow);
+}
+
+.tabla-stock th,
+.tabla-stock td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--adm-border);
+}
+
+.tabla-stock thead th {
+  background: color-mix(in srgb, var(--adm-rosa) 25%, #fff);
+  color: var(--adm-choco);
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .resumen-dia {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 992px) {
+  .resumen-dia {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.footer-bottom {
+    background:black;
+    text-align: center;
+    border-top: 1px solid #444;
+    padding-top: 15px;
+    font-size: 0.85rem;
+    color: #ccc;
+}
+.bloque__header-flex {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.btn {
+    display: inline-block; 
+    text-decoration: none; 
+    padding: 10px 16px; 
+    border-radius: 8px; 
+    background: #000; 
+    color: #fff; 
+    font-weight: 700;
+}
+.toolbar {
+    display: flex; 
+    gap: 12px; 
+    align-items: center; 
+    justify-content: space-between; 
+    margin-bottom: 10px;
+}
+.tabla-miniatura {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.acciones {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.btn-accion {
+    padding: 6px 10px;
+    border: 1px solid var(--adm-border);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--adm-text);
+    background-color: var(--adm-surface);
+    font-size: 0.85rem;
+}
+.btn-accion:hover {
+    background-color: color-mix(in srgb, var(--adm-rosa) 40%, #fff);
+}
+.btn-editar {
+    background-color: #8B4513;
+    color: white;
+    border-color: #8B4513;
+}
+.btn-desactivar {
+    background-color: #FFC0CB;
+    color: var(--adm-text);
+    border-color: #FFC0CB;
+}
+.btn-eliminar {
+    background-color: #EF5350;
+    color: white;
+    border-color: #EF5350;
+}
+.paginacion {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    padding: 10px;
+}
+.pagina, .paginacion button {
+    background-color: var(--adm-surface);
+    border: 1px solid var(--adm-border);
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.pagina.actual {
+    background-color: var(--adm-rosa);
+    font-weight: bold;
+}
