@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/CSS/estilos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Contacto - Mr. Pastel</title>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <img src="/images/logo1.png" alt="Pastelería 1000 Sabores" >
+                <h1>Mr. Pastel</h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="/index.html" >Home</a></li>
+                    <li><a href="/pages/tienda/productos.html">Productos</a></li>
+                    <li><a href="/pages/tienda/nosotros.html">Nosotros</a></li>
+                    <li><a href="/pages/tienda/blog.html">Blogs</a></li>
+                    <li><a href="/pages/tienda/contacto.html"  class="active">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="header-icons">
+                <a href="carrito.html" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count-header" class="cart-count">0</span>
+                </a>
+                <a href="/pages/tienda/login.html" class="login-link">Login</a>
+                <a href="/pages/tienda/registro.html" class="login-link">Registro</a>
+            </div>
+        </div>
+    </header>
+    <main class="container contacto-page">
+        <h2>Formulario de contacto</h2>
+
+        <form action="/contacto" method="POST" class="contacto-form" novalidate>
+            <fieldset>
+            <legend>Contáctanos</legend>
+
+            <div class="contacto-grid">
+                <div class="cg-group --full">
+                <p class="cp-intro">
+                    ¿Tienes dudas o comentarios? Completa el formulario y te responderemos a la brevedad.
+                </p>
+                </div>
+
+                <div class="cg-group">
+                <label for="nombre">Nombre completo</label>
+                <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    required
+                    placeholder="Escriba su nombre completo"
+                    autocomplete="name"
+                >
+                </div>
+
+                <div class="cg-group">
+                <label for="correo">Correo electrónico</label>
+                <input
+                    type="email"
+                    id="correo"
+                    name="correo"
+                    required
+                    placeholder="ejemplo@email.com"
+                    autocomplete="email"
+                >
+                </div>
+
+                <div class="cg-group">
+                <label for="telefono">Teléfono (opcional)</label>
+                <input
+                    type="tel"
+                    id="telefono"
+                    name="telefono"
+                    placeholder="+56 9 1234 5678"
+                    autocomplete="tel"
+                >
+                </div>
+
+                <div class="cg-group --full">
+                <label for="mensaje">Mensaje</label>
+                <textarea
+                    id="mensaje"
+                    name="mensaje"
+                    required
+                    placeholder="Escriba su mensaje"
+                    rows="5"
+                ></textarea>
+                </div>
+
+                <div class="cg-actions --full">
+                <button type="submit" class="cg-btn cg-btn--primary">Enviar mensaje</button>
+                <span class="cp-help">También puedes escribirnos a <strong>contacto@mrpastel.cl</strong></span>
+                </div>
+            </div>
+            </fieldset>
+        </form>
+  </main>
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-info">
+                <h3>Pastelería Mr. Pastel</h3>
+                <p>Av. Dulce 123, Santiago, Chile</p>
+                <p>Tel: +56 9 1234 5678</p>
+                <p>Email: contacto@mrpastel.cl</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="/pages/index.html">Home</a></li>
+                    <li><a href="/pages/tienda/productos.html">Productos</a></li>
+                    <li><a href="/pages/tienda/nosotros.html">Nosotros</a></li>
+                    <li><a href="/pages/tienda/blog1.html">Blogs</a></li>
+                    <li><a href="/pages/tienda/contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>Síguenos</h4>
+                <a href="https://www.facebook.com/"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a>
+                <a href="https://x.com/"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.tiktok.com/"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Pastelería Mr. Pastel. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="/JS/tienda.js"></script>
+    <script src="/JS/product.js"></script>
+    <script src="/JS/validation.js"></script>
+</body>
+</html>
